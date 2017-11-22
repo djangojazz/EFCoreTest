@@ -57,16 +57,16 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
-    <Folder Include="Scripts" />
+    <Folder Include="Schemas" />
     <Folder Include="Tables" />
   </ItemGroup>
   <ItemGroup>
-    <PreDeploy Include="Scripts\CreateCoreSchema.sql" />
     <Build Include="Tables\Aircraft.sql" />
     <Build Include="Tables\Flight.sql" />
+    <Build Include="Schemas\Core.sql" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Tables\User.sql" />
+    <Build Include="Tables\Users.sql" />
     <Build Include="Tables\FlightPlan.sql" />
     <Build Include="Tables\Aircraft_FlightOrFlightPlan.sql" />
   </ItemGroup>

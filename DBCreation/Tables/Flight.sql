@@ -3,7 +3,7 @@
 	FlightId INT CONSTRAINT PK_Flight_FlightId PRIMARY KEY
 ,	FlightAlias varchar(128) 
 ,	DateCreated DateTime
-,	CreatedBy Int
+,	CreatedBy Int Constraint FK_Flight_CoreUser_CreatedByUserId FOREIGN KEY References Core.Users(UserId)
 ,	ModifiedLast DateTime
-,	ModifiedBy Int
+,	ModifiedBy Int Constraint FK_Flight_CoreUser_ModifiedByUserId FOREIGN KEY References Core.Users(UserId)
 )
