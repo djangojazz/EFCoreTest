@@ -13,10 +13,9 @@ BEGIN
 		Select @FlightOrFlightPlanText = Stuff(@FlightOrFlightPlanText, 7, 0, 'Plan')
 	End
 
-	Select @AircraftText, @FlightOrFlightPlanText
-
-	Declare @SQL nvarchar(1024) = 'Select * from Aircraft_FlightOrFlightPlan where AircraftId = ' + @AircraftText +
-		' AND ' + @ReferencedTable + 'Id = ' + @FlightOrFlightPlanText
+	Declare @SQL nvarchar(1024) = 'Select * from vAircraftToFlightsAndFlightPlans 
+		Where AircraftId = ' + @AircraftText +
+		' AND ' + @ReferencedTable + 'Id = ' + @FlightOrFlightPlanText 
 
 	exec sp_executesql @SQL
 	--print @SQL

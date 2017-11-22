@@ -60,12 +60,14 @@
     <Folder Include="Schemas" />
     <Folder Include="Tables" />
     <Folder Include="Procedures" />
+    <Folder Include="Views" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Aircraft.sql" />
     <Build Include="Tables\Flight.sql" />
     <Build Include="Schemas\Core.sql" />
     <Build Include="Procedures\pGetFlightOrFlightPlan.sql" />
+    <Build Include="Views\vAircraftToFlightsAndFlightPlans.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Users.sql" />

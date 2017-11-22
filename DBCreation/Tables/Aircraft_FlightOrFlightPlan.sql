@@ -6,7 +6,7 @@
 ,	FlightId INT CONSTRAINT FK_AircraftFlightOrFlightPlan_Flight_FlightId FOREIGN KEY REFERENCES Flight(FlightId)
 ,	FlightPlanId INT CONSTRAINT FK_AircraftFlightOrFlightPlan_FlightPlan_FlightPlanId FOREIGN KEY REFERENCES FlightPlan(FlightPlanId)
 ,	DateCreated DateTime
-,	CreatedBy Int Constraint FK_Aircraft_FlightOrFlightPlan_CoreUser_CreatedByUserId FOREIGN KEY References Core.Users(UserId)
+,	CreatedById Int Constraint FK_Aircraft_FlightOrFlightPlan_CoreUser_CreatedByUserId FOREIGN KEY References Core.Users(UserId)
 ,	ModifiedLast DateTime
-,	ModifiedBy Int Constraint FK_Aircraft_FlightOrFlightPlan_CoreUser_ModifiedByUserId FOREIGN KEY References Core.Users(UserId)
+,	ModifiedById Int Constraint FK_Aircraft_FlightOrFlightPlan_CoreUser_ModifiedByUserId FOREIGN KEY References Core.Users(UserId)
 )
