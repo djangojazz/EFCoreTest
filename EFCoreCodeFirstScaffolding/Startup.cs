@@ -27,6 +27,7 @@ namespace EFCoreCodeFirstScaffolding
         {
             services.AddMvc();
 
+            //I can set this up on Startup for injection
             https://docs.microsoft.com/en-us/ef/core/get-started/aspnetcore/existing-db
             var connection = @"Server=.;Database=EFCore;Trusted_Connection=True;";
             services.AddDbContext<EFCoreContext>(options => options.UseSqlServer(connection));

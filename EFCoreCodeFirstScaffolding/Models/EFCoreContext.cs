@@ -6,11 +6,10 @@ namespace EFCoreCodeFirstScaffolding.Models
 {
     public partial class EFCoreContext : DbContext
     {
-        public EFCoreContext(DbContextOptions<EFCoreContext> options)
-            : base(options)
-        {
+        public EFCoreContext() {}
 
-        }
+        public EFCoreContext(DbContextOptions<EFCoreContext> options)
+            : base(options) {}
 
         public virtual DbSet<Aircraft> Aircraft { get; set; }
         public virtual DbSet<AircraftFlightOrFlightPlan> AircraftFlightOrFlightPlan { get; set; }

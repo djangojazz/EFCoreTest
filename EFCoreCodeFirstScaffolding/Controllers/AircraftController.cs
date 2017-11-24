@@ -24,7 +24,11 @@ namespace EFCoreCodeFirstScaffolding.Controllers
         [HttpGet]
         public IEnumerable<Aircraft> GetAircraft()
         {
-            return _context.Aircraft;
+            using (var context = new EFCoreContext())
+            {
+                return context.Aircraft.ToList();
+            }
+            //return _context.Aircraft;
         }
 
         // GET: api/Aircraft/5
