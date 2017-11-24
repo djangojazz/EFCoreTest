@@ -30,7 +30,8 @@ namespace EFCoreCodeFirstScaffolding.Controllers
             //in my experience and it is potential over kill in a small application but just FYI.  The connection 
             using (var context = new EFCoreContext(new DbContextOptions<EFCoreContext>()))
             {
-                return context.Aircraft.ToList();
+                var aircraft = context.Aircraft.ToList();
+                return aircraft;
             }
 
             //return _context.Aircraft.ToList();
