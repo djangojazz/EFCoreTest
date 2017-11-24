@@ -1,12 +1,13 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using EFCoreCodeFirstScaffolding.Models;
 
-namespace EFCoreCodeFirstScaffolding.Models
+namespace EFCoreCodeFirstScaffolding
 {
     public partial class EFCoreContext : DbContext
     {
-        public EFCoreContext() {}
+        public EFCoreContext() { }
 
         public EFCoreContext(DbContextOptions<EFCoreContext> options)
             : base(options) {}
