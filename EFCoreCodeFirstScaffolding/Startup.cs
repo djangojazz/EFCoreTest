@@ -8,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using EFCoreCodeFirstScaffolding.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFCoreCodeFirstScaffolding
 {
@@ -24,6 +26,10 @@ namespace EFCoreCodeFirstScaffolding
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            https://docs.microsoft.com/en-us/ef/core/get-started/aspnetcore/existing-db
+            var connection = @"Server=.;Database=EFCore;Trusted_Connection=True;";
+            services.AddDbContext<EFCoreContext>(options => options.UseSqlServer(connection));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
