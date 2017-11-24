@@ -25,12 +25,11 @@ namespace EFCoreCodeFirstScaffolding
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //Much of this is based on: https://docs.microsoft.com/en-us/ef/core/get-started/aspnetcore/existing-db
             services.AddMvc();
 
-            //I can set this up on Startup for injection
-            https://docs.microsoft.com/en-us/ef/core/get-started/aspnetcore/existing-db
-            var connection = @"Server=.;Database=EFCore;Trusted_Connection=True;";
-            services.AddDbContext<EFCoreContext>(options => options.UseSqlServer(connection));
+            //I can set this up on Startup for injection to be reused universally by all controllers with a statically set connectionstring
+            services.AddDbContext<EFCoreContext>(options => options.UseSqlServer(Configuration.GetConnectionString("EFCore")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

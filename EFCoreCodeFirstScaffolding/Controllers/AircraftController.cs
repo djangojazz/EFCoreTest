@@ -13,6 +13,8 @@ namespace EFCoreCodeFirstScaffolding.Controllers
     [Route("api/Aircraft")]
     public class AircraftController : Controller
     {
+        //Invoking a dependency injection manner in the controller is fine provided the lifetime is acceptable.  In a larger environment of many controllers
+        //you may get a problem with a larger set of connections open even when not being used.
         private readonly EFCoreContext _context;
 
         public AircraftController(EFCoreContext context)
@@ -24,11 +26,14 @@ namespace EFCoreCodeFirstScaffolding.Controllers
         [HttpGet]
         public IEnumerable<Aircraft> GetAircraft()
         {
-            using (var context = new EFCoreContext())
+            //This may be advantageous if I want to get data, close the connection and dispose of the context.  In larger situations this is more common
+            //in my experience and it is potential over kill in a small application but just FYI.  The connection 
+            using (var context = new EFCoreContext(new DbContextOptions<EFCoreContext>()))
             {
                 return context.Aircraft.ToList();
             }
-            //return _context.Aircraft;
+
+            //return _context.Aircraft.ToList();
         }
 
         // GET: api/Aircraft/5
