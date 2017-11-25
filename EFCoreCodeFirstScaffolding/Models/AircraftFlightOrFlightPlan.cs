@@ -1,24 +1,32 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EFCoreCodeFirstScaffolding.Models
 {
-    public partial class AircraftFlightOrFlightPlan
+    public sealed class AircraftFlightOrFlightPlan : BaseModel
     {
+        public AircraftFlightOrFlightPlan() {}
+
+        public AircraftFlightOrFlightPlan(string referencedTable, Aircraft aircraft, Flight flight = null, FlightPlan flightPlan = null)
+        {
+            ReferencedTable = referencedTable;
+            Aircraft = aircraft;
+            Flight = flight;
+            FlightPlan = flightPlan;
+        }
+
+        [Key]
         public int AircraftFlightOrFlightPlanId { get; set; }
         public string ReferencedTable { get; set; }
-        public int? AircraftId { get; set; }
-        public int? FlightId { get; set; }
-        public int? FlightPlanId { get; set; }
-        public DateTime? DateCreated { get; set; }
-        public int? CreatedById { get; set; }
-        public DateTime? ModifiedLast { get; set; }
-        public int? ModifiedById { get; set; }
 
+        [ForeignKey("AircraftId")]
         public Aircraft Aircraft { get; set; }
-        public Users CreatedBy { get; set; }
+
+        [ForeignKey("FlightId")]
         public Flight Flight { get; set; }
+
+        [ForeignKey("FlightPlanId")]
         public FlightPlan FlightPlan { get; set; }
-        public Users ModifiedBy { get; set; }
     }
 }

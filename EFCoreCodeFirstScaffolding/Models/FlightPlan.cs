@@ -1,26 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EFCoreCodeFirstScaffolding.Models
 {
     public partial class FlightPlan
     {
-        public FlightPlan()
-        {
-            AircraftFlightOrFlightPlan = new HashSet<AircraftFlightOrFlightPlan>();
-        }
+        public FlightPlan() {}
 
+        [Key]
         public int FlightPlanId { get; set; }
-        public int? FlightId { get; set; }
-        public string FlightPlanName { get; set; }
-        public DateTime? DateCreated { get; set; }
-        public int? CreatedById { get; set; }
-        public DateTime? ModifiedLast { get; set; }
-        public int? ModifiedById { get; set; }
 
-        public Users CreatedBy { get; set; }
+        [Column(TypeName = "varchar(128)"), MaxLength(128)]
+        public string FlightPlanName { get; set; }
+        
+        [ForeignKey("FlightId")]
         public Flight Flight { get; set; }
-        public Users ModifiedBy { get; set; }
-        public ICollection<AircraftFlightOrFlightPlan> AircraftFlightOrFlightPlan { get; set; }
     }
 }
