@@ -17,6 +17,8 @@ namespace EFCoreCodeFirstScaffolding.Models
         [Key]
         public int AircraftId { get; set; }
 
+        //public int TestId { get; set; }
+
         [Column(TypeName = "varchar(128)"), MaxLength(128)]
         public string AircraftName { get; set; }
     }
