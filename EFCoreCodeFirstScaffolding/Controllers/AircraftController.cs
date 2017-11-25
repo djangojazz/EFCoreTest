@@ -27,16 +27,15 @@ namespace EFCoreCodeFirstScaffolding.Controllers
         public IEnumerable<Aircraft> GetAircraft()
         {
             //This may be advantageous if I want to get data, close the connection and dispose of the context.  In larger situations this is more common
-            //in my experience and it is potential over kill in a small application but just FYI.  The connection 
-            using (var context = new EFCoreContext())
-            {
-                var aircraft = context.Aircraft
-                    .Include(x => x.CreatedBy)
-                    .ToList();
-                return aircraft;
-            }
+            //in my experience and it is potential over kill in a small application but just FYI.  The connection for this example should be fine
 
-            //return _context.Aircraft.ToList();
+            //Use this methodology when connections are at a premium in a high contact high transaction environment.
+            //using (var context = new EFCoreContext())
+            //{
+            //    ...Do work here with contextual operations
+            //}
+
+            return _context.Aircraft.Include(x => x.CreatedBy).Include(x => x.ModifiedBy).ToList();
         }
 
         // GET: api/Aircraft/5
@@ -48,7 +47,7 @@ namespace EFCoreCodeFirstScaffolding.Controllers
                 return BadRequest(ModelState);
             }
 
-            var aircraft = await _context.Aircraft.SingleOrDefaultAsync(m => m.AircraftId == id);
+            var aircraft = await _context.Aircraft.Include(x => x.CreatedBy).Include(x => x.ModifiedBy).SingleOrDefaultAsync(m => m.AircraftId == id);
 
             if (aircraft == null)
             {
@@ -67,18 +66,29 @@ namespace EFCoreCodeFirstScaffolding.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != aircraft.AircraftId)
+            var existing = _context.Aircraft
+                .Include(x => x.CreatedBy)
+                .Include(x => x.ModifiedBy)
+                .SingleOrDefault(x => x.AircraftId == id);
+
+            if (existing == null) 
             {
                 return BadRequest();
             }
-
-            _context.Entry(aircraft).State = EntityState.Modified;
-
+            
             try
             {
+                if(existing.AircraftName == aircraft.AircraftName && existing.ModifiedBy.UserId == aircraft?.ModifiedBy?.UserId)
+                {
+                    return BadRequest("Changes are exactly the same");
+                }
+
+                existing.AircraftName = aircraft.AircraftName;
+                existing.ModifiedBy = GetUserFromId(aircraft?.ModifiedBy?.UserId ?? existing.ModifiedBy.UserId);
+
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException db)
             {
                 if (!AircraftExists(id))
                 {
@@ -97,16 +107,31 @@ namespace EFCoreCodeFirstScaffolding.Controllers
         [HttpPost]
         public async Task<IActionResult> PostAircraft([FromBody] Aircraft aircraft)
         {
-            if (!ModelState.IsValid)
+            //I don't want the Created By to be required in the model but in the controller for a new object it shold be
+            if (!ModelState.IsValid && aircraft.CreatedBy == null)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.Aircraft.Add(aircraft);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetAircraft", new { id = aircraft.AircraftId }, aircraft);
+            //I need to handle the traversing manually of EF Core addition.  EF and controllers are good at doing basic vanilla objects.
+            //They typically cannot handle an object within an object reference as it blows up on misunderstanding trying to insert the object
+            //versus just referencing it.  I prefer the reference method as it helps on getting objects later, although during inserts you 
+            //to be aware of this.
+            
+            try
+            {
+                Aircraft newAircraft = new Aircraft(aircraft.AircraftName, GetUserFromId(aircraft?.CreatedBy?.UserId ?? 1), GetUserFromId(aircraft?.CreatedBy?.UserId ?? 1));
+                _context.Aircraft.Add(newAircraft);
+                await _context.SaveChangesAsync();
+                return CreatedAtAction("GetAircraft", new { id = _context.Aircraft.SingleOrDefault(x => x.AircraftName == aircraft.AircraftName)?.AircraftId ?? 1 }, aircraft);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
+
+        private Users GetUserFromId(int userId) => _context.Users.FirstOrDefault(x => x.UserId == userId);
 
         // DELETE: api/Aircraft/5
         [HttpDelete("{id}")]

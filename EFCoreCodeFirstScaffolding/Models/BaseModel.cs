@@ -16,10 +16,10 @@ namespace EFCoreCodeFirstScaffolding.Models
             ModifiedLast = (modifiedLast == null) ? DateTime.Now : modifiedLast;
         }
 
-        [Column(TypeName = "DateTime"), Required]
+        [Column(TypeName = "DateTime")]
         public DateTime? DateCreated { get; set; }
 
-        [ForeignKey("CreatedById"), Required]
+        [ForeignKey("CreatedById")]
         public Users CreatedBy { get; set; }
 
         [Column(TypeName = "DateTime")]
