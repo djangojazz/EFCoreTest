@@ -16,9 +16,14 @@ namespace EFCoreCodeFirstScaffolding
         public static void Main(string[] args)
         {
             /*
+             * OMG Seriously getting dotnet ef to work is incredibly hard you need to reach into the project file and manually upgrade as of writing this on
+             * 11/25/2017.  This article points to what to do: https://github.com/aspnet/Scaffolding/issues/645.  In essence you get told that you cannot 
+             * install the Microsoft.EntityFrameworkCore.Tools.DotNet as it would be a downgrade but really you just need a higher reference in proj file
+             * like so: <PropertyGroup><RuntimeFrameworkVersion>2.0.3</RuntimeFrameworkVersion></PropertyGroup>
+             * 
              * NuGet scripts to run:
              * - Install-Package Microsoft.EntityFrameworkCore.SqlServer
-             * - Install-Package Microsoft.EntityFrameworkCore.Tools
+             * - Install-Package Microsoft.EntityFrameworkCore.Tools.DotNet
              * - This will generate models:
              * Scaffold-DbContext "Server=.;Database=EFCore;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir ScaffoldModels
              */
