@@ -20,7 +20,7 @@ namespace EFCoreCodeFirstScaffolding
              * - Install-Package Microsoft.EntityFrameworkCore.SqlServer
              * - Install-Package Microsoft.EntityFrameworkCore.Tools
              * - This will generate models:
-             * Scaffold-DbContext "Server=.;Database=EFCore;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
+             * Scaffold-DbContext "Server=.;Database=EFCore;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir ScaffoldModels
              */
             //BuildWebHost(args).Run();
 

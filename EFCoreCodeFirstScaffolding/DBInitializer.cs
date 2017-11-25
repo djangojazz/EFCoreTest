@@ -28,8 +28,8 @@ namespace EFCoreCodeFirstScaffolding
             {
                 new List<Aircraft>
                 {
-                    new Aircraft("TestAircraft", users[0], users[0]),
-                    new Aircraft("TestAircraft2", users[0], users[0])
+                    new Aircraft("TestAircraft", users[0]),
+                    new Aircraft("TestAircraft2", users[0])
                 }
                 .ForEach(
                     a => context.Aircraft.Add(a)

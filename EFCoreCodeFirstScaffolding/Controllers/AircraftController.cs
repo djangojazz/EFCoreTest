@@ -28,7 +28,7 @@ namespace EFCoreCodeFirstScaffolding.Controllers
         {
             //This may be advantageous if I want to get data, close the connection and dispose of the context.  In larger situations this is more common
             //in my experience and it is potential over kill in a small application but just FYI.  The connection 
-            using (var context = new EFCoreContext(new DbContextOptions<EFCoreContext>()))
+            using (var context = new EFCoreContext())
             {
                 var aircraft = context.Aircraft.ToList();
                 return aircraft;
