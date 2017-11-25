@@ -7,6 +7,8 @@ namespace EFCoreCodeFirstScaffolding.Models
 {
     public sealed class Users
     {
+        public Users() {}
+
         public Users(string userName)
         {
             UserName = userName;
@@ -14,9 +16,7 @@ namespace EFCoreCodeFirstScaffolding.Models
 
         [Key]
         public int UserId { get; set; }
-
-        public int TestId { get; set; }
-
+        
         [Column(TypeName = "varchar(128)"), MaxLength(128)]
         public string UserName { get; set; }
     }

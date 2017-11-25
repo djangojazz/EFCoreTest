@@ -29,8 +29,8 @@ namespace EFCoreCodeFirstScaffolding
             services.AddMvc();
 
             //I can set this up on Startup for injection to be reused universally by all controllers with a statically set connectionstring
-            //services.AddDbContext<EFCoreContext>(options => options.UseSqlServer(Configuration.GetConnectionString("EFCore")));
-            services.AddDbContext<ScaffoldModels.EFCoreContext>();
+            services.AddDbContext<EFCoreContext>(options => options.UseSqlServer(Configuration.GetConnectionString("EFCore")));
+            //services.AddDbContext<ScaffoldModels.EFCoreContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

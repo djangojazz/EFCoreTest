@@ -23,18 +23,17 @@ namespace EFCoreCodeFirstScaffolding
                 users.ForEach(u => context.Users.Add(u));
                 context.SaveChanges();
             }
-            
+
+            var admin = context.Users.Single(x => x.UserId == 1);
+            var aircrafts = new List<Aircraft>
+            {
+                new Aircraft("TestAircraft", admin, admin),
+                new Aircraft("TestAircraft2", admin, admin)
+            };
+
             if (!context.Aircraft.Any())
             {
-                new List<Aircraft>
-                {
-                    new Aircraft("TestAircraft", users[0]),
-                    new Aircraft("TestAircraft2", users[0])
-                }
-                .ForEach(
-                    a => context.Aircraft.Add(a)
-                    );
-
+                aircrafts.ForEach(a => context.Aircraft.Add(a));
                 context.SaveChanges();
             }
             
