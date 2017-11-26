@@ -34,11 +34,6 @@ namespace EFCoreCodeFirstScaffolding.Controllers
             //{
             //    ...Do work here with contextual operations
             //}
-
-            //For some weird reason to get data from a proc or view you need to define a DbSet object to be the container, that you may then obtain data from.
-            //It would be possible to potentially get data from multiple tables and do the joins on the front end.  However this is potentially very inefficient
-            //when compared to a highly optimized procedure.
-            var data = await _context.pGetFlightOrFlightPlanResult.FromSql("pGetFlightOrFlightPlan @p0, @p1, @p2", parameters: new[] { "Flight", null, null}).ToListAsync();
             
             return await _context.Aircraft.Include(x => x.CreatedBy).Include(x => x.ModifiedBy).ToListAsync();
         }
