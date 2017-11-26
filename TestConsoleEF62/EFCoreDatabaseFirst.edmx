@@ -1,0 +1,652 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="EFCoreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="Aircraft">
+          <Key>
+            <PropertyRef Name="AircraftId" />
+          </Key>
+          <Property Name="AircraftId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AircraftName" Type="varchar" MaxLength="128" />
+          <Property Name="CreatedById" Type="int" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="ModifiedById" Type="int" />
+          <Property Name="ModifiedLast" Type="datetime" />
+        </EntityType>
+        <EntityType Name="AircraftFlightOrFlightPlan">
+          <Key>
+            <PropertyRef Name="AircraftFlightOrFlightPlanId" />
+          </Key>
+          <Property Name="AircraftFlightOrFlightPlanId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReferencedTable" Type="nvarchar(max)" />
+          <Property Name="AircraftId" Type="int" />
+          <Property Name="FlightId" Type="int" />
+          <Property Name="FlightPlanId" Type="int" />
+          <Property Name="CreatedById" Type="int" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="ModifiedById" Type="int" />
+          <Property Name="ModifiedLast" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Flight">
+          <Key>
+            <PropertyRef Name="FlightId" />
+          </Key>
+          <Property Name="FlightId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FlightAlias" Type="varchar" MaxLength="128" />
+          <Property Name="CreatedById" Type="int" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="ModifiedById" Type="int" />
+          <Property Name="ModifiedLast" Type="datetime" />
+        </EntityType>
+        <EntityType Name="FlightPlan">
+          <Key>
+            <PropertyRef Name="FlightPlanId" />
+          </Key>
+          <Property Name="FlightPlanId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FlightId" Type="int" />
+          <Property Name="FlightPlanName" Type="varchar" MaxLength="128" />
+          <Property Name="CreatedById" Type="int" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="ModifiedById" Type="int" />
+          <Property Name="ModifiedLast" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'EFCore.dbo.vAircraftToFlightsAndFlightPlans' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vAircraftToFlightsAndFlightPlans">
+          <Key>
+            <PropertyRef Name="AircraftFlightOrFlightPlanId" />
+          </Key>
+          <Property Name="AircraftFlightOrFlightPlanId" Type="int" Nullable="false" />
+          <Property Name="AircraftId" Type="int" />
+          <Property Name="AircraftName" Type="varchar" MaxLength="128" />
+          <Property Name="FlightId" Type="int" />
+          <Property Name="FlightAlias" Type="varchar" MaxLength="128" />
+          <Property Name="FlightPlanId" Type="int" />
+          <Property Name="FlightPlanName" Type="varchar" MaxLength="128" />
+          <Property Name="CreatedById" Type="int" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="128" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="ModifiedById" Type="int" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="128" />
+          <Property Name="ModifiedLast" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_Aircraft_Users_CreatedById">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Aircraft" Type="Self.Aircraft" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Aircraft">
+              <PropertyRef Name="CreatedById" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Aircraft_Users_ModifiedById">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Aircraft" Type="Self.Aircraft" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Aircraft">
+              <PropertyRef Name="ModifiedById" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AircraftFlightOrFlightPlan_Aircraft_AircraftId">
+          <End Role="Aircraft" Type="Self.Aircraft" Multiplicity="0..1" />
+          <End Role="AircraftFlightOrFlightPlan" Type="Self.AircraftFlightOrFlightPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aircraft">
+              <PropertyRef Name="AircraftId" />
+            </Principal>
+            <Dependent Role="AircraftFlightOrFlightPlan">
+              <PropertyRef Name="AircraftId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AircraftFlightOrFlightPlan_Flight_FlightId">
+          <End Role="Flight" Type="Self.Flight" Multiplicity="0..1" />
+          <End Role="AircraftFlightOrFlightPlan" Type="Self.AircraftFlightOrFlightPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Flight">
+              <PropertyRef Name="FlightId" />
+            </Principal>
+            <Dependent Role="AircraftFlightOrFlightPlan">
+              <PropertyRef Name="FlightId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AircraftFlightOrFlightPlan_FlightPlan_FlightPlanId">
+          <End Role="FlightPlan" Type="Self.FlightPlan" Multiplicity="0..1" />
+          <End Role="AircraftFlightOrFlightPlan" Type="Self.AircraftFlightOrFlightPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FlightPlan">
+              <PropertyRef Name="FlightPlanId" />
+            </Principal>
+            <Dependent Role="AircraftFlightOrFlightPlan">
+              <PropertyRef Name="FlightPlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AircraftFlightOrFlightPlan_Users_CreatedById">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="AircraftFlightOrFlightPlan" Type="Self.AircraftFlightOrFlightPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="AircraftFlightOrFlightPlan">
+              <PropertyRef Name="CreatedById" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AircraftFlightOrFlightPlan_Users_ModifiedById">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="AircraftFlightOrFlightPlan" Type="Self.AircraftFlightOrFlightPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="AircraftFlightOrFlightPlan">
+              <PropertyRef Name="ModifiedById" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Flight_Users_CreatedById">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Flight" Type="Self.Flight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Flight">
+              <PropertyRef Name="CreatedById" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Flight_Users_ModifiedById">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Flight" Type="Self.Flight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Flight">
+              <PropertyRef Name="ModifiedById" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FlightPlan_Flight_FlightId">
+          <End Role="Flight" Type="Self.Flight" Multiplicity="0..1" />
+          <End Role="FlightPlan" Type="Self.FlightPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Flight">
+              <PropertyRef Name="FlightId" />
+            </Principal>
+            <Dependent Role="FlightPlan">
+              <PropertyRef Name="FlightId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="pGetFlightOrFlightPlan" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ReferencedTable" Type="varchar" Mode="In" />
+          <Parameter Name="AircraftId" Type="int" Mode="In" />
+          <Parameter Name="FlightOrFlightPlanId" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="EFCoreModelStoreContainer">
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="Core" store:Type="Tables" />
+          <EntitySet Name="Aircraft" EntityType="Self.Aircraft" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AircraftFlightOrFlightPlan" EntityType="Self.AircraftFlightOrFlightPlan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Flight" EntityType="Self.Flight" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FlightPlan" EntityType="Self.FlightPlan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vAircraftToFlightsAndFlightPlans" EntityType="Self.vAircraftToFlightsAndFlightPlans" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vAircraftToFlightsAndFlightPlans].[AircraftFlightOrFlightPlanId] AS [AircraftFlightOrFlightPlanId], 
+    [vAircraftToFlightsAndFlightPlans].[AircraftId] AS [AircraftId], 
+    [vAircraftToFlightsAndFlightPlans].[AircraftName] AS [AircraftName], 
+    [vAircraftToFlightsAndFlightPlans].[FlightId] AS [FlightId], 
+    [vAircraftToFlightsAndFlightPlans].[FlightAlias] AS [FlightAlias], 
+    [vAircraftToFlightsAndFlightPlans].[FlightPlanId] AS [FlightPlanId], 
+    [vAircraftToFlightsAndFlightPlans].[FlightPlanName] AS [FlightPlanName], 
+    [vAircraftToFlightsAndFlightPlans].[CreatedById] AS [CreatedById], 
+    [vAircraftToFlightsAndFlightPlans].[CreatedBy] AS [CreatedBy], 
+    [vAircraftToFlightsAndFlightPlans].[DateCreated] AS [DateCreated], 
+    [vAircraftToFlightsAndFlightPlans].[ModifiedById] AS [ModifiedById], 
+    [vAircraftToFlightsAndFlightPlans].[ModifiedBy] AS [ModifiedBy], 
+    [vAircraftToFlightsAndFlightPlans].[ModifiedLast] AS [ModifiedLast]
+    FROM [dbo].[vAircraftToFlightsAndFlightPlans] AS [vAircraftToFlightsAndFlightPlans]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Aircraft_Users_CreatedById" Association="Self.FK_Aircraft_Users_CreatedById">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Aircraft" EntitySet="Aircraft" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Aircraft_Users_ModifiedById" Association="Self.FK_Aircraft_Users_ModifiedById">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Aircraft" EntitySet="Aircraft" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AircraftFlightOrFlightPlan_Aircraft_AircraftId" Association="Self.FK_AircraftFlightOrFlightPlan_Aircraft_AircraftId">
+            <End Role="Aircraft" EntitySet="Aircraft" />
+            <End Role="AircraftFlightOrFlightPlan" EntitySet="AircraftFlightOrFlightPlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AircraftFlightOrFlightPlan_Flight_FlightId" Association="Self.FK_AircraftFlightOrFlightPlan_Flight_FlightId">
+            <End Role="Flight" EntitySet="Flight" />
+            <End Role="AircraftFlightOrFlightPlan" EntitySet="AircraftFlightOrFlightPlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AircraftFlightOrFlightPlan_FlightPlan_FlightPlanId" Association="Self.FK_AircraftFlightOrFlightPlan_FlightPlan_FlightPlanId">
+            <End Role="FlightPlan" EntitySet="FlightPlan" />
+            <End Role="AircraftFlightOrFlightPlan" EntitySet="AircraftFlightOrFlightPlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AircraftFlightOrFlightPlan_Users_CreatedById" Association="Self.FK_AircraftFlightOrFlightPlan_Users_CreatedById">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="AircraftFlightOrFlightPlan" EntitySet="AircraftFlightOrFlightPlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AircraftFlightOrFlightPlan_Users_ModifiedById" Association="Self.FK_AircraftFlightOrFlightPlan_Users_ModifiedById">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="AircraftFlightOrFlightPlan" EntitySet="AircraftFlightOrFlightPlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Flight_Users_CreatedById" Association="Self.FK_Flight_Users_CreatedById">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Flight" EntitySet="Flight" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Flight_Users_ModifiedById" Association="Self.FK_Flight_Users_ModifiedById">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Flight" EntitySet="Flight" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FlightPlan_Flight_FlightId" Association="Self.FK_FlightPlan_Flight_FlightId">
+            <End Role="Flight" EntitySet="Flight" />
+            <End Role="FlightPlan" EntitySet="FlightPlan" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EFCoreModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Aircraft" Relationship="Self.FK_Aircraft_Users_CreatedById" FromRole="Users" ToRole="Aircraft" />
+          <NavigationProperty Name="Aircraft1" Relationship="Self.FK_Aircraft_Users_ModifiedById" FromRole="Users" ToRole="Aircraft" />
+          <NavigationProperty Name="AircraftFlightOrFlightPlans" Relationship="Self.FK_AircraftFlightOrFlightPlan_Users_CreatedById" FromRole="Users" ToRole="AircraftFlightOrFlightPlan" />
+          <NavigationProperty Name="AircraftFlightOrFlightPlans1" Relationship="Self.FK_AircraftFlightOrFlightPlan_Users_ModifiedById" FromRole="Users" ToRole="AircraftFlightOrFlightPlan" />
+          <NavigationProperty Name="Flights" Relationship="Self.FK_Flight_Users_CreatedById" FromRole="Users" ToRole="Flight" />
+          <NavigationProperty Name="Flights1" Relationship="Self.FK_Flight_Users_ModifiedById" FromRole="Users" ToRole="Flight" />
+        </EntityType>
+        <EntityType Name="Aircraft">
+          <Key>
+            <PropertyRef Name="AircraftId" />
+          </Key>
+          <Property Name="AircraftId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AircraftName" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedById" Type="Int32" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedById" Type="Int32" />
+          <Property Name="ModifiedLast" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Aircraft_Users_CreatedById" FromRole="Aircraft" ToRole="Users" />
+          <NavigationProperty Name="User1" Relationship="Self.FK_Aircraft_Users_ModifiedById" FromRole="Aircraft" ToRole="Users" />
+          <NavigationProperty Name="AircraftFlightOrFlightPlans" Relationship="Self.FK_AircraftFlightOrFlightPlan_Aircraft_AircraftId" FromRole="Aircraft" ToRole="AircraftFlightOrFlightPlan" />
+        </EntityType>
+        <EntityType Name="AircraftFlightOrFlightPlan">
+          <Key>
+            <PropertyRef Name="AircraftFlightOrFlightPlanId" />
+          </Key>
+          <Property Name="AircraftFlightOrFlightPlanId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReferencedTable" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AircraftId" Type="Int32" />
+          <Property Name="FlightId" Type="Int32" />
+          <Property Name="FlightPlanId" Type="Int32" />
+          <Property Name="CreatedById" Type="Int32" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedById" Type="Int32" />
+          <Property Name="ModifiedLast" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="User" Relationship="Self.FK_AircraftFlightOrFlightPlan_Users_CreatedById" FromRole="AircraftFlightOrFlightPlan" ToRole="Users" />
+          <NavigationProperty Name="User1" Relationship="Self.FK_AircraftFlightOrFlightPlan_Users_ModifiedById" FromRole="AircraftFlightOrFlightPlan" ToRole="Users" />
+          <NavigationProperty Name="Aircraft" Relationship="Self.FK_AircraftFlightOrFlightPlan_Aircraft_AircraftId" FromRole="AircraftFlightOrFlightPlan" ToRole="Aircraft" />
+          <NavigationProperty Name="Flight" Relationship="Self.FK_AircraftFlightOrFlightPlan_Flight_FlightId" FromRole="AircraftFlightOrFlightPlan" ToRole="Flight" />
+          <NavigationProperty Name="FlightPlan" Relationship="Self.FK_AircraftFlightOrFlightPlan_FlightPlan_FlightPlanId" FromRole="AircraftFlightOrFlightPlan" ToRole="FlightPlan" />
+        </EntityType>
+        <EntityType Name="Flight">
+          <Key>
+            <PropertyRef Name="FlightId" />
+          </Key>
+          <Property Name="FlightId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FlightAlias" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedById" Type="Int32" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedById" Type="Int32" />
+          <Property Name="ModifiedLast" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Flight_Users_CreatedById" FromRole="Flight" ToRole="Users" />
+          <NavigationProperty Name="User1" Relationship="Self.FK_Flight_Users_ModifiedById" FromRole="Flight" ToRole="Users" />
+          <NavigationProperty Name="AircraftFlightOrFlightPlans" Relationship="Self.FK_AircraftFlightOrFlightPlan_Flight_FlightId" FromRole="Flight" ToRole="AircraftFlightOrFlightPlan" />
+          <NavigationProperty Name="FlightPlans" Relationship="Self.FK_FlightPlan_Flight_FlightId" FromRole="Flight" ToRole="FlightPlan" />
+        </EntityType>
+        <EntityType Name="FlightPlan">
+          <Key>
+            <PropertyRef Name="FlightPlanId" />
+          </Key>
+          <Property Name="FlightPlanId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FlightId" Type="Int32" />
+          <Property Name="FlightPlanName" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedById" Type="Int32" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedById" Type="Int32" />
+          <Property Name="ModifiedLast" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="AircraftFlightOrFlightPlans" Relationship="Self.FK_AircraftFlightOrFlightPlan_FlightPlan_FlightPlanId" FromRole="FlightPlan" ToRole="AircraftFlightOrFlightPlan" />
+          <NavigationProperty Name="Flight" Relationship="Self.FK_FlightPlan_Flight_FlightId" FromRole="FlightPlan" ToRole="Flight" />
+        </EntityType>
+        <EntityType Name="vAircraftToFlightsAndFlightPlan">
+          <Key>
+            <PropertyRef Name="AircraftFlightOrFlightPlanId" />
+          </Key>
+          <Property Name="AircraftFlightOrFlightPlanId" Type="Int32" Nullable="false" />
+          <Property Name="AircraftId" Type="Int32" />
+          <Property Name="AircraftName" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="FlightId" Type="Int32" />
+          <Property Name="FlightAlias" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="FlightPlanId" Type="Int32" />
+          <Property Name="FlightPlanName" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedById" Type="Int32" />
+          <Property Name="CreatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedById" Type="Int32" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedLast" Type="DateTime" Precision="3" />
+        </EntityType>
+        <Association Name="FK_Aircraft_Users_CreatedById">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Aircraft" Type="Self.Aircraft" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Aircraft">
+              <PropertyRef Name="CreatedById" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Aircraft_Users_ModifiedById">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Aircraft" Type="Self.Aircraft" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Aircraft">
+              <PropertyRef Name="ModifiedById" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AircraftFlightOrFlightPlan_Users_CreatedById">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="AircraftFlightOrFlightPlan" Type="Self.AircraftFlightOrFlightPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="AircraftFlightOrFlightPlan">
+              <PropertyRef Name="CreatedById" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AircraftFlightOrFlightPlan_Users_ModifiedById">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="AircraftFlightOrFlightPlan" Type="Self.AircraftFlightOrFlightPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="AircraftFlightOrFlightPlan">
+              <PropertyRef Name="ModifiedById" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Flight_Users_CreatedById">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Flight" Type="Self.Flight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Flight">
+              <PropertyRef Name="CreatedById" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Flight_Users_ModifiedById">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Flight" Type="Self.Flight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Flight">
+              <PropertyRef Name="ModifiedById" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AircraftFlightOrFlightPlan_Aircraft_AircraftId">
+          <End Role="Aircraft" Type="Self.Aircraft" Multiplicity="0..1" />
+          <End Role="AircraftFlightOrFlightPlan" Type="Self.AircraftFlightOrFlightPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aircraft">
+              <PropertyRef Name="AircraftId" />
+            </Principal>
+            <Dependent Role="AircraftFlightOrFlightPlan">
+              <PropertyRef Name="AircraftId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AircraftFlightOrFlightPlan_Flight_FlightId">
+          <End Role="Flight" Type="Self.Flight" Multiplicity="0..1" />
+          <End Role="AircraftFlightOrFlightPlan" Type="Self.AircraftFlightOrFlightPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Flight">
+              <PropertyRef Name="FlightId" />
+            </Principal>
+            <Dependent Role="AircraftFlightOrFlightPlan">
+              <PropertyRef Name="FlightId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AircraftFlightOrFlightPlan_FlightPlan_FlightPlanId">
+          <End Role="FlightPlan" Type="Self.FlightPlan" Multiplicity="0..1" />
+          <End Role="AircraftFlightOrFlightPlan" Type="Self.AircraftFlightOrFlightPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FlightPlan">
+              <PropertyRef Name="FlightPlanId" />
+            </Principal>
+            <Dependent Role="AircraftFlightOrFlightPlan">
+              <PropertyRef Name="FlightPlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FlightPlan_Flight_FlightId">
+          <End Role="Flight" Type="Self.Flight" Multiplicity="0..1" />
+          <End Role="FlightPlan" Type="Self.FlightPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Flight">
+              <PropertyRef Name="FlightId" />
+            </Principal>
+            <Dependent Role="FlightPlan">
+              <PropertyRef Name="FlightId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EFCoreEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="Aircraft" EntityType="Self.Aircraft" />
+          <EntitySet Name="AircraftFlightOrFlightPlans" EntityType="Self.AircraftFlightOrFlightPlan" />
+          <EntitySet Name="Flights" EntityType="Self.Flight" />
+          <EntitySet Name="FlightPlans" EntityType="Self.FlightPlan" />
+          <EntitySet Name="vAircraftToFlightsAndFlightPlans" EntityType="Self.vAircraftToFlightsAndFlightPlan" />
+          <AssociationSet Name="FK_Aircraft_Users_CreatedById" Association="Self.FK_Aircraft_Users_CreatedById">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Aircraft" EntitySet="Aircraft" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Aircraft_Users_ModifiedById" Association="Self.FK_Aircraft_Users_ModifiedById">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Aircraft" EntitySet="Aircraft" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AircraftFlightOrFlightPlan_Users_CreatedById" Association="Self.FK_AircraftFlightOrFlightPlan_Users_CreatedById">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="AircraftFlightOrFlightPlan" EntitySet="AircraftFlightOrFlightPlans" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AircraftFlightOrFlightPlan_Users_ModifiedById" Association="Self.FK_AircraftFlightOrFlightPlan_Users_ModifiedById">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="AircraftFlightOrFlightPlan" EntitySet="AircraftFlightOrFlightPlans" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Flight_Users_CreatedById" Association="Self.FK_Flight_Users_CreatedById">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Flight" EntitySet="Flights" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Flight_Users_ModifiedById" Association="Self.FK_Flight_Users_ModifiedById">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Flight" EntitySet="Flights" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AircraftFlightOrFlightPlan_Aircraft_AircraftId" Association="Self.FK_AircraftFlightOrFlightPlan_Aircraft_AircraftId">
+            <End Role="Aircraft" EntitySet="Aircraft" />
+            <End Role="AircraftFlightOrFlightPlan" EntitySet="AircraftFlightOrFlightPlans" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AircraftFlightOrFlightPlan_Flight_FlightId" Association="Self.FK_AircraftFlightOrFlightPlan_Flight_FlightId">
+            <End Role="Flight" EntitySet="Flights" />
+            <End Role="AircraftFlightOrFlightPlan" EntitySet="AircraftFlightOrFlightPlans" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AircraftFlightOrFlightPlan_FlightPlan_FlightPlanId" Association="Self.FK_AircraftFlightOrFlightPlan_FlightPlan_FlightPlanId">
+            <End Role="FlightPlan" EntitySet="FlightPlans" />
+            <End Role="AircraftFlightOrFlightPlan" EntitySet="AircraftFlightOrFlightPlans" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FlightPlan_Flight_FlightId" Association="Self.FK_FlightPlan_Flight_FlightId">
+            <End Role="Flight" EntitySet="Flights" />
+            <End Role="FlightPlan" EntitySet="FlightPlans" />
+          </AssociationSet>
+          <FunctionImport Name="pGetFlightOrFlightPlan">
+            <Parameter Name="ReferencedTable" Mode="In" Type="String" />
+            <Parameter Name="AircraftId" Mode="In" Type="Int32" />
+            <Parameter Name="FlightOrFlightPlanId" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EFCoreModelStoreContainer" CdmEntityContainer="EFCoreEntities">
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="EFCoreModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Aircraft">
+            <EntityTypeMapping TypeName="EFCoreModel.Aircraft">
+              <MappingFragment StoreEntitySet="Aircraft">
+                <ScalarProperty Name="AircraftId" ColumnName="AircraftId" />
+                <ScalarProperty Name="AircraftName" ColumnName="AircraftName" />
+                <ScalarProperty Name="CreatedById" ColumnName="CreatedById" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="ModifiedById" ColumnName="ModifiedById" />
+                <ScalarProperty Name="ModifiedLast" ColumnName="ModifiedLast" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AircraftFlightOrFlightPlans">
+            <EntityTypeMapping TypeName="EFCoreModel.AircraftFlightOrFlightPlan">
+              <MappingFragment StoreEntitySet="AircraftFlightOrFlightPlan">
+                <ScalarProperty Name="AircraftFlightOrFlightPlanId" ColumnName="AircraftFlightOrFlightPlanId" />
+                <ScalarProperty Name="ReferencedTable" ColumnName="ReferencedTable" />
+                <ScalarProperty Name="AircraftId" ColumnName="AircraftId" />
+                <ScalarProperty Name="FlightId" ColumnName="FlightId" />
+                <ScalarProperty Name="FlightPlanId" ColumnName="FlightPlanId" />
+                <ScalarProperty Name="CreatedById" ColumnName="CreatedById" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="ModifiedById" ColumnName="ModifiedById" />
+                <ScalarProperty Name="ModifiedLast" ColumnName="ModifiedLast" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Flights">
+            <EntityTypeMapping TypeName="EFCoreModel.Flight">
+              <MappingFragment StoreEntitySet="Flight">
+                <ScalarProperty Name="FlightId" ColumnName="FlightId" />
+                <ScalarProperty Name="FlightAlias" ColumnName="FlightAlias" />
+                <ScalarProperty Name="CreatedById" ColumnName="CreatedById" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="ModifiedById" ColumnName="ModifiedById" />
+                <ScalarProperty Name="ModifiedLast" ColumnName="ModifiedLast" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FlightPlans">
+            <EntityTypeMapping TypeName="EFCoreModel.FlightPlan">
+              <MappingFragment StoreEntitySet="FlightPlan">
+                <ScalarProperty Name="FlightPlanId" ColumnName="FlightPlanId" />
+                <ScalarProperty Name="FlightId" ColumnName="FlightId" />
+                <ScalarProperty Name="FlightPlanName" ColumnName="FlightPlanName" />
+                <ScalarProperty Name="CreatedById" ColumnName="CreatedById" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="ModifiedById" ColumnName="ModifiedById" />
+                <ScalarProperty Name="ModifiedLast" ColumnName="ModifiedLast" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vAircraftToFlightsAndFlightPlans">
+            <EntityTypeMapping TypeName="EFCoreModel.vAircraftToFlightsAndFlightPlan">
+              <MappingFragment StoreEntitySet="vAircraftToFlightsAndFlightPlans">
+                <ScalarProperty Name="AircraftFlightOrFlightPlanId" ColumnName="AircraftFlightOrFlightPlanId" />
+                <ScalarProperty Name="AircraftId" ColumnName="AircraftId" />
+                <ScalarProperty Name="AircraftName" ColumnName="AircraftName" />
+                <ScalarProperty Name="FlightId" ColumnName="FlightId" />
+                <ScalarProperty Name="FlightAlias" ColumnName="FlightAlias" />
+                <ScalarProperty Name="FlightPlanId" ColumnName="FlightPlanId" />
+                <ScalarProperty Name="FlightPlanName" ColumnName="FlightPlanName" />
+                <ScalarProperty Name="CreatedById" ColumnName="CreatedById" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="ModifiedById" ColumnName="ModifiedById" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedLast" ColumnName="ModifiedLast" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="pGetFlightOrFlightPlan" FunctionName="EFCoreModel.Store.pGetFlightOrFlightPlan" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
