@@ -52,24 +52,24 @@ namespace EFCoreCodeFirstScaffolding.Migrations
                 {
                     b.Property<int>("AircraftFlightOrFlightPlanId")
                         .ValueGeneratedOnAdd();
+                    
+                    b.Property<string>("ReferencedTable");
 
                     b.Property<int?>("AircraftId");
+                    
+                    b.Property<int?>("FlightId");
 
+                    b.Property<int?>("FlightPlanId");
+                    
                     b.Property<int?>("CreatedById");
 
                     b.Property<DateTime?>("DateCreated")
                         .HasColumnType("DateTime");
 
-                    b.Property<int?>("FlightId");
-
-                    b.Property<int?>("FlightPlanId");
-
                     b.Property<int?>("ModifiedById");
 
                     b.Property<DateTime?>("ModifiedLast")
                         .HasColumnType("DateTime");
-
-                    b.Property<string>("ReferencedTable");
 
                     b.HasKey("AircraftFlightOrFlightPlanId");
 
@@ -91,14 +91,14 @@ namespace EFCoreCodeFirstScaffolding.Migrations
                     b.Property<int>("FlightId")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("FlightAlias")
+                        .HasColumnType("varchar(128)")
+                        .HasMaxLength(128);
+                    
                     b.Property<int?>("CreatedById");
 
                     b.Property<DateTime?>("DateCreated")
                         .HasColumnType("DateTime");
-
-                    b.Property<string>("FlightAlias")
-                        .HasColumnType("varchar(128)")
-                        .HasMaxLength(128);
 
                     b.Property<int?>("ModifiedById");
 

@@ -63,9 +63,9 @@ namespace EFCoreCodeFirstScaffolding.Migrations
                 {
                     FlightId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    FlightAlias = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: true),
                     CreatedById = table.Column<int>(nullable: true),
                     DateCreated = table.Column<DateTime>(type: "DateTime", nullable: true),
-                    FlightAlias = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: true),
                     ModifiedById = table.Column<int>(nullable: true),
                     ModifiedLast = table.Column<DateTime>(type: "DateTime", nullable: true)
                 },
@@ -114,14 +114,14 @@ namespace EFCoreCodeFirstScaffolding.Migrations
                 {
                     AircraftFlightOrFlightPlanId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ReferencedTable = table.Column<string>(nullable: true),
                     AircraftId = table.Column<int>(nullable: true),
-                    CreatedById = table.Column<int>(nullable: true),
-                    DateCreated = table.Column<DateTime>(type: "DateTime", nullable: true),
                     FlightId = table.Column<int>(nullable: true),
                     FlightPlanId = table.Column<int>(nullable: true),
+                    CreatedById = table.Column<int>(nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "DateTime", nullable: true),
                     ModifiedById = table.Column<int>(nullable: true),
-                    ModifiedLast = table.Column<DateTime>(type: "DateTime", nullable: true),
-                    ReferencedTable = table.Column<string>(nullable: true)
+                    ModifiedLast = table.Column<DateTime>(type: "DateTime", nullable: true)
                 },
                 constraints: table =>
                 {
