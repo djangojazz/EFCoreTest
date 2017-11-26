@@ -14,7 +14,7 @@ Select
 ,	afp.ModifiedById
 ,	um.UserName as ModifiedBy
 ,	afp.ModifiedLast
-from Aircraft_FlightOrFlightPlan afp 
+from AircraftFlightOrFlightPlan afp 
 	inner join Aircraft a on afp.AircraftId = a.AircraftId
 	inner join Core.Users uc on afp.CreatedById = uc.UserId
 	inner join Core.Users um on afp.ModifiedById = um.UserId

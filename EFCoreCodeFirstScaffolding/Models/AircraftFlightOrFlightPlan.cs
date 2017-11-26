@@ -8,7 +8,8 @@ namespace EFCoreCodeFirstScaffolding.Models
     {
         public AircraftFlightOrFlightPlan() {}
 
-        public AircraftFlightOrFlightPlan(string referencedTable, Aircraft aircraft, Flight flight = null, FlightPlan flightPlan = null)
+        public AircraftFlightOrFlightPlan(string referencedTable, Aircraft aircraft, Users createdBy, Users modifiedBy, Flight flight = null, FlightPlan flightPlan = null)
+            : base(createdBy, modifiedBy)
         {
             ReferencedTable = referencedTable;
             Aircraft = aircraft;
@@ -17,7 +18,7 @@ namespace EFCoreCodeFirstScaffolding.Models
         }
 
         [Key]
-        public int Aircraft_FlightOrFlightPlanId { get; set; }
+        public int AircraftFlightOrFlightPlanId { get; set; }
         public string ReferencedTable { get; set; }
 
         [ForeignKey("AircraftId")]

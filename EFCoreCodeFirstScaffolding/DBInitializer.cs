@@ -12,6 +12,8 @@ namespace EFCoreCodeFirstScaffolding
         {
             context.Database.EnsureCreated();
             
+            //Only invoke seeding of data if tables do not contain data already.
+
             if (!context.Users.Any())
             {
                 new List<Users>
@@ -19,7 +21,7 @@ namespace EFCoreCodeFirstScaffolding
                     new Users("Admin"),
                     new Users("Brett")
                 }
-                .ForEach(u => context.Users.Add(u));
+                .ForEach(x => context.Users.Add(x));
                 context.SaveChanges();
             }
 
@@ -32,9 +34,11 @@ namespace EFCoreCodeFirstScaffolding
                     new Aircraft("737", admin, admin),
                     new Aircraft("747", admin, admin)
                 }
-                .ForEach(a => context.Aircraft.Add(a));
+                .ForEach(x => context.Aircraft.Add(x));
                 context.SaveChanges();
             }
+
+            var acs = context.Aircraft.ToList();
 
             if (!context.Flight.Any())
             {
@@ -43,14 +47,39 @@ namespace EFCoreCodeFirstScaffolding
                     new Flight("737", admin, admin),
                     new Flight("747", admin, admin)
                 }
-                .ForEach(a => context.Flight.Add(a));
+                .ForEach(x => context.Flight.Add(x));
                 context.SaveChanges();
             }
 
-            //insert into Flight Values('Flight1', getdate(), 1, getdate(), 1),('Flight2', getdate(), 2, getdate(), 2)
-            //insert into FlightPlan Values(1, 'FlightPlan1-A', getdate(), 1, getdate(), 1),(1, 'FlightPlan1-B', getdate(), 1, getdate(), 1),(2, 'FlightPlan2', getdate(), 2, getdate(), 2)
-            //insert into Aircraft_FlightOrFlightPlan Values('Flight', 1, 1, null, getdate(), 1, getdate(), 1),('FlightPlan', 1, null, 1, getdate(), 1, getdate(), 1)
-            //,('FlightPlan', 2, null, 2, getdate(), 1, getdate(), 1),('Flight', 2, 2, null, getdate(), 1, getdate(), 1),('FlightPlan', 2, null, 3, getdate(), 1, getdate(), 1)
+            var fs = context.Flight.ToList();
+            
+            if(!context.FlightPlan.Any())
+            {
+                new List<FlightPlan>
+                {
+                    new FlightPlan("FlightPlan737-A", fs[0], admin, admin),
+                    new FlightPlan("FlightPlan737-B", fs[0], admin, admin),
+                    new FlightPlan("FlightPlan747-A", fs[1], admin, admin)
+                }
+                .ForEach(x => context.FlightPlan.Add(x));
+                context.SaveChanges();
+            }
+
+            var ps = context.FlightPlan.ToList();
+
+            if(!context.AircraftFlightOrFlightPlan.Any())
+            {
+                new List<AircraftFlightOrFlightPlan>
+                {
+                    new AircraftFlightOrFlightPlan("Flight", acs[0], admin, admin, fs[0]),
+                    new AircraftFlightOrFlightPlan("FlightPlan", acs[0], admin, admin, null, ps[0]),
+                    new AircraftFlightOrFlightPlan("FlightPlan", acs[1], admin, admin, null, ps[1]),
+                    new AircraftFlightOrFlightPlan("Flight", acs[1], admin, admin, fs[1]),
+                    new AircraftFlightOrFlightPlan("FlightPlan", acs[1], admin, admin, null, ps[2]),
+                }
+                .ForEach(x => context.AircraftFlightOrFlightPlan.Add(x));
+                context.SaveChanges();
+            }
         }
     }
 }

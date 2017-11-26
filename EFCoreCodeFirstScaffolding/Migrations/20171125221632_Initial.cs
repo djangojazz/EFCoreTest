@@ -95,7 +95,11 @@ namespace EFCoreCodeFirstScaffolding.Migrations
                     FlightPlanId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     FlightId = table.Column<int>(nullable: true),
-                    FlightPlanName = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: true)
+                    FlightPlanName = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: true),
+                    CreatedById = table.Column<int>(nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "DateTime", nullable: true),
+                    ModifiedById = table.Column<int>(nullable: true),
+                    ModifiedLast = table.Column<DateTime>(type: "DateTime", nullable: true)
                 },
                 constraints: table =>
                 {

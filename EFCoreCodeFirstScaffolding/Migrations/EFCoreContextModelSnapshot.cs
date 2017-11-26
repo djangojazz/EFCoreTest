@@ -130,6 +130,16 @@ namespace EFCoreCodeFirstScaffolding.Migrations
                     b.HasIndex("FlightId");
 
                     b.ToTable("FlightPlan");
+
+                    b.Property<int?>("CreatedById");
+
+                    b.Property<DateTime?>("DateCreated")
+                        .HasColumnType("DateTime");
+
+                    b.Property<int?>("ModifiedById");
+
+                    b.Property<DateTime?>("ModifiedLast")
+                        .HasColumnType("DateTime");
                 });
 
             modelBuilder.Entity("EFCoreCodeFirstScaffolding.Models.Users", b =>

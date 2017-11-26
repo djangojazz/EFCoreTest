@@ -13,7 +13,7 @@ Post-Deployment Script Template
 --Clean sweep
 Set NoCount On;
 
-truncate table Aircraft_FlightOrFlightPlan;
+truncate table AircraftFlightOrFlightPlan;
 Delete FlightPlan
 DBCC CHECKIDENT ('FlightPlan', RESEED, 0);
 Delete Flight
@@ -28,5 +28,5 @@ insert into Core.Users Values ('Admin'),('Brett')
 insert into Aircraft Values ('737', getdate(), 1, getdate(), 1),('747', getdate(), 2, getdate(), 2)
 insert into Flight Values ('Flight1', getdate(), 1, getdate(), 1),('Flight2', getdate(), 2, getdate(), 2)
 insert into FlightPlan Values (1, 'FlightPlan1-A', getdate(), 1, getdate(), 1),(1, 'FlightPlan1-B', getdate(), 1, getdate(), 1),(2, 'FlightPlan2', getdate(), 2, getdate(), 2)
-insert into Aircraft_FlightOrFlightPlan Values ('Flight', 1, 1, null, getdate(), 1, getdate(), 1),('FlightPlan', 1, null, 1, getdate(), 1, getdate(), 1)
+insert into AircraftFlightOrFlightPlan Values ('Flight', 1, 1, null, getdate(), 1, getdate(), 1),('FlightPlan', 1, null, 1, getdate(), 1, getdate(), 1)
 ,('FlightPlan', 2, null, 2, getdate(), 1, getdate(), 1),('Flight', 2, 2, null, getdate(), 1, getdate(), 1),('FlightPlan', 2, null, 3, getdate(), 1, getdate(), 1)
