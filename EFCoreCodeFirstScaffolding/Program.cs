@@ -16,7 +16,7 @@ namespace EFCoreCodeFirstScaffolding
         public static void Main(string[] args)
         {
             /*
-             * OMG Seriously getting dotnet ef to work is incredibly hard you need to reach into the project file and manually upgrade as of writing this on
+             * Getting dotnet ef to work is incredibly hard you need to reach into the project file and manually upgrade as of writing this on
              * 11/25/2017.  This article points to what to do: https://github.com/aspnet/Scaffolding/issues/645.  In essence you get told that you cannot 
              * install the Microsoft.EntityFrameworkCore.Tools.DotNet as it would be a downgrade but really you just need a higher reference in proj file
              * like so: <PropertyGroup><RuntimeFrameworkVersion>2.0.3</RuntimeFrameworkVersion></PropertyGroup>.  Then it appears you need to also let the 
@@ -29,6 +29,17 @@ namespace EFCoreCodeFirstScaffolding
              * - Install-Package Microsoft.EntityFrameworkCore.Tools.DotNet
              * - This will generate models:
              * Scaffold-DbContext "Server=.;Database=EFCore;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir ScaffoldModels
+             * 
+             * "EFCore": "Server=tcp:brettdb.database.windows.net,1433;Initial Catalog=Expenses;Persist Security Info=False;User ID=bmorin@brettdb;Password=1soldano!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;MultipleActiveResultSets=True;App=EntityFramework"
+             * "EFCore": "Server=.;Database=EFCore;Trusted_Connection=True;"
+             * 
+             * Controller commands to use with Fiddler
+             * GET: http://localhost:65438/api/aircraft
+             * POST: use above with 
+             *      header: Content-Type: application/json; charset=utf-8
+             *      body: {"aircraftName":"BrettTest","createdBy":{"userId":2}}
+             * PUT: use above with an id extension that is valid and header and body similar to above POST
+             * DELETE: use above with a valid id extension
              */
 
             var host = BuildWebHost(args);
