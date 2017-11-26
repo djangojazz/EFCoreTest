@@ -1,4 +1,4 @@
-﻿CREATE TABLE Aircraft_FlightOrFlightPlan
+﻿CREATE TABLE AircraftFlightOrFlightPlan
 (
 	AircraftFlightOrFlightPlanId INT Identity CONSTRAINT PK_AircraftFlightOrFlightPlan_AircraftFlightOrFlightPlanId PRIMARY KEY
 ,	ReferencedTable Varchar(128) NOT NULL

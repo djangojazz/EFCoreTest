@@ -17,7 +17,7 @@ namespace EFCoreCodeFirstScaffolding.Models
         }
 
         [Key]
-        public int AircraftFlightOrFlightPlanId { get; set; }
+        public int Aircraft_FlightOrFlightPlanId { get; set; }
         public string ReferencedTable { get; set; }
 
         [ForeignKey("AircraftId")]

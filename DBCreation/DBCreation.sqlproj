@@ -72,7 +72,7 @@
   <ItemGroup>
     <Build Include="Tables\Users.sql" />
     <Build Include="Tables\FlightPlan.sql" />
-    <Build Include="Tables\Aircraft_FlightOrFlightPlan.sql" />
+    <Build Include="Tables\AircraftFlightOrFlightPlan.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Seeding.sql" />

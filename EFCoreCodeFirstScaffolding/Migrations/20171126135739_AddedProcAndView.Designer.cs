@@ -11,8 +11,8 @@ using System;
 namespace EFCoreCodeFirstScaffolding.Migrations
 {
     [DbContext(typeof(EFCoreContext))]
-    [Migration("20171125223203_AddedColumn")]
-    partial class AddedColumn
+    [Migration("20171126135739_AddedProcAndView")]
+    partial class AddedProcAndView
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -40,7 +40,7 @@ namespace EFCoreCodeFirstScaffolding.Migrations
                     b.Property<DateTime?>("ModifiedLast")
                         .HasColumnType("DateTime");
 
-                    b.Property<int>("TestId");
+                    b.Property<int>("TestId2");
 
                     b.HasKey("AircraftId");
 

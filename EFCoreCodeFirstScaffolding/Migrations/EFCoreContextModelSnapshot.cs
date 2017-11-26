@@ -39,8 +39,6 @@ namespace EFCoreCodeFirstScaffolding.Migrations
                     b.Property<DateTime?>("ModifiedLast")
                         .HasColumnType("DateTime");
 
-                    b.Property<int>("TestId");
-
                     b.HasKey("AircraftId");
 
                     b.HasIndex("CreatedById");
@@ -85,7 +83,7 @@ namespace EFCoreCodeFirstScaffolding.Migrations
 
                     b.HasIndex("ModifiedById");
 
-                    b.ToTable("AircraftFlightOrFlightPlan");
+                    b.ToTable("Aircraft_FlightOrFlightPlan");
                 });
 
             modelBuilder.Entity("EFCoreCodeFirstScaffolding.Models.Flight", b =>

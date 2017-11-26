@@ -4,9 +4,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EFCoreCodeFirstScaffolding.Models
 {
-    public partial class FlightPlan
+    public partial class FlightPlan : BaseModel
     {
         public FlightPlan() {}
+
+        public FlightPlan(string flightPlanName, Users createdBy, Users modifiedBy)
+            : base(createdBy, modifiedBy)
+        {
+            FlightPlanName = flightPlanName;
+        }
 
         [Key]
         public int FlightPlanId { get; set; }

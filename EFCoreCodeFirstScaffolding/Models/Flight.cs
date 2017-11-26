@@ -8,7 +8,8 @@ namespace EFCoreCodeFirstScaffolding.Models
     {
         public Flight() { }
 
-        public Flight(string flightAlias)
+        public Flight(string flightAlias, Users createdBy, Users modifiedBy)
+            : base(createdBy, modifiedBy)
         {
             FlightAlias = flightAlias;
         }
