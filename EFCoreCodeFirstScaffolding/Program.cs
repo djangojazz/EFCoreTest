@@ -30,7 +30,7 @@ namespace EFCoreCodeFirstScaffolding
              * - This will generate models:
              * Scaffold-DbContext "Server=.;Database=EFCore;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir ScaffoldModels
              * 
-             * "EFCore": "Server=tcp:brettdb.database.windows.net,1433;Initial Catalog=Expenses;Persist Security Info=False;User ID=bmorin@brettdb;Password=1soldano!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;MultipleActiveResultSets=True;App=EntityFramework"
+             * "EFCore": "Server=tcp:brettdb.database.windows.net,1433;Initial Catalog=Expenses;Persist Security Info=False;User ID=bmorin@brettdb;Password=NOPE;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;MultipleActiveResultSets=True;App=EntityFramework"
              * "EFCore": "Server=.;Database=EFCore;Trusted_Connection=True;"
              * 
              * Controller commands to use with Fiddler
