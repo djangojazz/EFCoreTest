@@ -17,6 +17,7 @@ namespace EFCoreCodeFirstScaffolding
         public virtual DbSet<Flight> Flight { get; set; }
         public virtual DbSet<FlightPlan> FlightPlan { get; set; }
         public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<pGetFlightOrFlightPlanResult> pGetFlightOrFlightPlanResult { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

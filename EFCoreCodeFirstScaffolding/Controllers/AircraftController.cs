@@ -24,7 +24,7 @@ namespace EFCoreCodeFirstScaffolding.Controllers
 
         // GET: api/Aircraft
         [HttpGet]
-        public IEnumerable<Aircraft> GetAircraft()
+        public async Task<IEnumerable<Aircraft>> GetAircraft()
         {
             //This may be advantageous if I want to get data, close the connection and dispose of the context.  In larger situations this is more common
             //in my experience and it is potential over kill in a small application but just FYI.  The connection for this example should be fine
@@ -35,7 +35,12 @@ namespace EFCoreCodeFirstScaffolding.Controllers
             //    ...Do work here with contextual operations
             //}
 
-            return _context.Aircraft.Include(x => x.CreatedBy).Include(x => x.ModifiedBy).ToList();
+            //For some weird reason to get data from a proc or view you need to define a DbSet object to be the container, that you may then obtain data from.
+            //It would be possible to potentially get data from multiple tables and do the joins on the front end.  However this is potentially very inefficient
+            //when compared to a highly optimized procedure.
+            var data = await _context.pGetFlightOrFlightPlanResult.FromSql("pGetFlightOrFlightPlan @p0, @p1, @p2", parameters: new[] { "Flight", null, null}).ToListAsync();
+            
+            return await _context.Aircraft.Include(x => x.CreatedBy).Include(x => x.ModifiedBy).ToListAsync();
         }
 
         // GET: api/Aircraft/5

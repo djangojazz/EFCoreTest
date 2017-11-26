@@ -25,8 +25,10 @@ namespace EFCoreCodeFirstScaffolding
 	         * <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.1" />
              * 
              * NuGet scripts to run:
+             * - Install-Package Microsoft.EntityFrameworkCore
              * - Install-Package Microsoft.EntityFrameworkCore.SqlServer
              * - Install-Package Microsoft.EntityFrameworkCore.Tools.DotNet
+             * - Install-Package Microsoft.EntityFrameworkCore.Relational
              * - This will generate models:
              * Scaffold-DbContext "Server=.;Database=EFCore;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir ScaffoldModels
              * 
