@@ -4,8 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 
 namespace EFCoreCodeFirstScaffolding.Migrations
@@ -39,6 +37,8 @@ namespace EFCoreCodeFirstScaffolding.Migrations
                     b.Property<DateTime?>("ModifiedLast")
                         .HasColumnType("DateTime");
 
+                    b.Property<int>("TestId2");
+
                     b.HasKey("AircraftId");
 
                     b.HasIndex("CreatedById");
@@ -52,24 +52,24 @@ namespace EFCoreCodeFirstScaffolding.Migrations
                 {
                     b.Property<int>("AircraftFlightOrFlightPlanId")
                         .ValueGeneratedOnAdd();
-                    
-                    b.Property<string>("ReferencedTable");
 
                     b.Property<int?>("AircraftId");
-                    
-                    b.Property<int?>("FlightId");
 
-                    b.Property<int?>("FlightPlanId");
-                    
                     b.Property<int?>("CreatedById");
 
                     b.Property<DateTime?>("DateCreated")
                         .HasColumnType("DateTime");
 
+                    b.Property<int?>("FlightId");
+
+                    b.Property<int?>("FlightPlanId");
+
                     b.Property<int?>("ModifiedById");
 
                     b.Property<DateTime?>("ModifiedLast")
                         .HasColumnType("DateTime");
+
+                    b.Property<string>("ReferencedTable");
 
                     b.HasKey("AircraftFlightOrFlightPlanId");
 
@@ -83,7 +83,7 @@ namespace EFCoreCodeFirstScaffolding.Migrations
 
                     b.HasIndex("ModifiedById");
 
-                    b.ToTable("Aircraft_FlightOrFlightPlan");
+                    b.ToTable("AircraftFlightOrFlightPlan");
                 });
 
             modelBuilder.Entity("EFCoreCodeFirstScaffolding.Models.Flight", b =>
@@ -91,14 +91,14 @@ namespace EFCoreCodeFirstScaffolding.Migrations
                     b.Property<int>("FlightId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("FlightAlias")
-                        .HasColumnType("varchar(128)")
-                        .HasMaxLength(128);
-                    
                     b.Property<int?>("CreatedById");
 
                     b.Property<DateTime?>("DateCreated")
                         .HasColumnType("DateTime");
+
+                    b.Property<string>("FlightAlias")
+                        .HasColumnType("varchar(128)")
+                        .HasMaxLength(128);
 
                     b.Property<int?>("ModifiedById");
 
@@ -130,16 +130,6 @@ namespace EFCoreCodeFirstScaffolding.Migrations
                     b.HasIndex("FlightId");
 
                     b.ToTable("FlightPlan");
-
-                    b.Property<int?>("CreatedById");
-
-                    b.Property<DateTime?>("DateCreated")
-                        .HasColumnType("DateTime");
-
-                    b.Property<int?>("ModifiedById");
-
-                    b.Property<DateTime?>("ModifiedLast")
-                        .HasColumnType("DateTime");
                 });
 
             modelBuilder.Entity("EFCoreCodeFirstScaffolding.Models.Users", b =>

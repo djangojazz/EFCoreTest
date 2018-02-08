@@ -31,7 +31,7 @@ namespace EFCoreCodeFirstScaffolding.Migrations
             "  left join Flight f on afp.FlightId = f.FlightId " +
             "  left join FlightPlan fp on afp.FlightPlanId = fp.FlightPlanId "
             );
-
+            
             migrationBuilder.Sql(
             "create proc pGetFlightOrFlightPlan" +
             "( @ReferencedTable varchar(16) = 'Flight',	@AircraftId int,	@FlightOrFlightPlanId int) as " +
